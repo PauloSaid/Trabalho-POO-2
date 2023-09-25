@@ -13,7 +13,7 @@ export async function populaEstande(estande: Estande) {
 
 }
 
-export async function leEstande(estande: Estande) {
+export async function readEstande(estande: Estande) {
     const estandeData = await prisma.estande.findUnique({
         where: {
             numero: estande.getNumero()
@@ -28,6 +28,14 @@ export async function updateEstande(estande: Estande, numeroNovo: number) {
         },
         data: {
             numero: numeroNovo
+        }
+    })
+}
+
+export async function deleteEstande(estande: Estande) {
+    const estandeData = await prisma.estande.delete({
+        where: {
+            numero: estande.getNumero()
         }
     })
 }
