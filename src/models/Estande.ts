@@ -1,7 +1,7 @@
 export default class Estande{
-    private numero: Number;
+    private numero: number;
 
-    constructor(numero: Number){
+    constructor(numero: number){
         this.numero = numero;
     }
 
@@ -9,7 +9,7 @@ export default class Estande{
         return this.numero;
     }
 
-    public setNumero(numero: Number){
+    public setNumero(numero: number){
         this.numero = numero;
     }
 }

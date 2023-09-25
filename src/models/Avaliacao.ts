@@ -56,7 +56,7 @@ export default class Avaliacao{
         this.nota2 = nota2;
     }
 
-    public calcularNota(nota1: number, nota2: number): Number{
+    public calcularNota(nota1: number, nota2: number): number{
         nota1 = this.nota1;
         nota2 = this.nota2;
         const notaFinal = ((nota1+nota2)/2);

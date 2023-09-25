@@ -1,13 +1,11 @@
-import Aluno from "./Aluno";
-
 export default class Grupo{
-    private nomeGrupo: String;
-    private nomeProjeto: String;
-    private lider: Aluno;
+    private nomeGrupo: string;
+    private nomeProjeto: string;
+    private lider: string;
     private diaApresentacao: Date;
-    private numeroEstande: Number;
+    private numeroEstande: number;
 
-    constructor(nomeGrupo: String, nomeProjeto: String, lider: Aluno, diaApresentacao: Date, numeroEstande: Number){
+    constructor(nomeGrupo: string, nomeProjeto: string, lider: string, diaApresentacao: Date, numeroEstande: number){
         this.nomeGrupo = nomeGrupo;
         this.nomeProjeto = nomeProjeto;
         this.lider = lider;
@@ -19,7 +17,7 @@ export default class Grupo{
         return this.nomeGrupo;
     }
 
-    public setNomeGrupo(nomeGrupo: String){
+    public setNomeGrupo(nomeGrupo: string){
         this.nomeGrupo = nomeGrupo;
     }
 
@@ -27,7 +25,7 @@ export default class Grupo{
         return this.nomeProjeto;
     }
 
-    public setNomeProjeto(nomeProjeto: String){
+    public setNomeProjeto(nomeProjeto: string){
         this.nomeProjeto = nomeProjeto;
     }
 
@@ -35,7 +33,7 @@ export default class Grupo{
         return this.lider;
     }
 
-    public setLider(lider: Aluno){
+    public setLider(lider: string){
         this.lider = lider;
     }
 
@@ -51,7 +49,7 @@ export default class Grupo{
         return this.numeroEstande;
     }
 
-    public setNumeroEstande(numeroEstande: Number){
+    public setNumeroEstande(numeroEstande: number){
         this.numeroEstande = numeroEstande;
     }
 }
