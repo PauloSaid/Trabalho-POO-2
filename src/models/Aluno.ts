@@ -1,4 +1,7 @@
-export default class Aluno{
+import Avaliador from "./Avaliador";
+import Avaliacao from "./Avaliacao";
+
+export default class Aluno implements Avaliador{
     private nome: String;
     private matricula: Number;
     private telefone: Number;
@@ -42,5 +45,9 @@ export default class Aluno{
 
     public setEmail(email: String){
         this.email = email;
+    }
+
+    avaliarGrupo(nomeGrupo: Avaliacao["nomeGrupo"], nota: number): number{
+        return nota;
     }
 }
