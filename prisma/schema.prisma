@@ -17,8 +17,8 @@ model Aluno {
   matricula  Int      @unique
   telefone   Int      @unique
   grupo      Grupo?   @relation("Lideranca")
-  grupoAluno Grupo    @relation("Composicao", fields: [grupoId], references: [id])
-  grupoId    String
+  grupoAluno Grupo?    @relation("Composicao", fields: [grupoId], references: [id])
+  grupoId    String?
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 }
@@ -38,8 +38,8 @@ model Grupo {
   nomeGrupo       String     @unique
   nomeProjeto     String     @unique
   diaApresentacao DateTime
-  lider           Aluno      @relation("Lideranca", fields: [alunoId], references: [id])
-  alunoId         String     @unique
+  lider           Aluno?      @relation("Lideranca", fields: [alunoId], references: [email])
+  alunoId         String?     @unique
   alunos          Aluno[]    @relation("Composicao")
   numeroEstande   Estande    @relation(fields: [estandeId], references: [numero])
 }
