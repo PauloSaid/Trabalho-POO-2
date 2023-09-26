@@ -12,7 +12,7 @@ export async function populaGrupo(grupo: Grupo) {
             nomeGrupo: grupo.getNomeGrupo(),
             nomeProjeto: grupo.getNomeProjeto(),
             diaApresentacao: grupo.getDiaApresentacao(),
-            alunoId: grupo.getLider()
+            //alunoId: grupo.getLider()
         }
     })
 }

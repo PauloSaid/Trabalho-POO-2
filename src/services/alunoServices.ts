@@ -11,7 +11,7 @@ export async function populaAluno(aluno: Aluno) {
             nome: aluno.getNome(),
             matricula: aluno.getMatricula(),
             telefone: aluno.getTelefone(),
-            grupoId: aluno.getGrupo().getNomeGrupo()
+            //grupoId: aluno.getGrupo().getNomeGrupo()
         }
     })
 }

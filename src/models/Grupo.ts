@@ -1,14 +1,15 @@
+import Aluno from "./Aluno";
+
 export default class Grupo{
     private nomeGrupo: string;
     private nomeProjeto: string;
-    private lider: string;
+    private lider?: Aluno;
     private diaApresentacao: Date;
     private numeroEstande: number;
 
-    constructor(nomeGrupo: string, nomeProjeto: string, lider: string, diaApresentacao: Date, numeroEstande: number){
+    constructor(nomeGrupo: string, nomeProjeto: string, diaApresentacao: Date, numeroEstande: number){
         this.nomeGrupo = nomeGrupo;
         this.nomeProjeto = nomeProjeto;
-        this.lider = lider;
         this.diaApresentacao = diaApresentacao;
         this.numeroEstande = numeroEstande;
     }
@@ -33,7 +34,7 @@ export default class Grupo{
         return this.lider;
     }
 
-    public setLider(lider: string){
+    public setLider(lider: Aluno){
         this.lider = lider;
     }
 

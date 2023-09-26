@@ -7,15 +7,14 @@ export default class Aluno implements Avaliador{
     private matricula: number;
     private telefone: number;
     private email: string;
-    private grupo: Grupo;
+    private grupo?: Grupo;
 
-    constructor(nome: string, matricula: number, telefone: number, email: string, grupo: Grupo)
+    constructor(nome: string, matricula: number, telefone: number, email: string)
     {
         this.nome = nome;
         this.matricula = matricula;
         this.telefone = telefone;
         this.email = email;
-        this.grupo = grupo;
     }
 
     public getNome(){

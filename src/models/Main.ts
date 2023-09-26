@@ -1,4 +1,6 @@
-import { populaAluno } from "../services/alunoServices";
+import { deleteAluno, populaAluno } from "../services/alunoServices";
+import { populaEstande } from "../services/estandeServices";
+import { populaGrupo } from "../services/grupoServices";
 import Aluno from "./Aluno";
 import Avaliacao from "./Avaliacao";
 import Avaliador from "./Avaliador";
@@ -6,13 +8,13 @@ import Estande from "./Estande";
 import Grupo from "./Grupo";
 import Professor from "./Professor";
 
+const date = new Date('December 17, 1995 03:24:00');
 
-const estande = new Estande(1);
+const estande30 = new Estande(30);
 
-const grupo1 = new Grupo("Lei de laura", "Puteiro", "João Lucas", new Date("1995-12-17T03:24:00"), estande.getNumero())
 
-const aluno1 = new Aluno("LL", 100, 900, "paulin@email", grupo1);
-//const aluno = new Aluno("Paulin",622,2002,"Pau", new Grupo("dapdc","leide laura", "mucoloco", new Date('1995-12-17T03:24:00'),20));
+const aluno1 = new Aluno("Paulo Said", 2, 2799, "paulo@gmail.com");
 
-populaAluno(aluno1);
-//populaAluno(aluno);
+
+const grupoteste = new Grupo("Grupao", "Projetao", date, estande30.getNumero())
+grupoteste.setLider(aluno1);
