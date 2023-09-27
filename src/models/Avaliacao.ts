@@ -1,20 +1,29 @@
+import Professor from "./Professor";
+import Aluno from "./Aluno";
 import Avaliador from "./Avaliador";
 import Grupo from "./Grupo";
 
 export default class Avaliacao{
     private nomeGrupo: Grupo;
-    private avaliador1: Avaliador;
-    private avaliador2: Avaliador;
+    private avaliador1: Professor | Aluno;
+    private avaliador2: Aluno | Professor;
     private nota1: number;
     private nota2: number;
 
-    constructor(nomeGrupo: Grupo, avaliador1: Avaliador, avaliador2: Avaliador, nota1: number, nota2: number){
+    constructor(nomeGrupo: Grupo, avaliador1: Professor | Aluno, avaliador2: Aluno | Professor, nota1: number, nota2: number){
         this.nomeGrupo = nomeGrupo;
         this.avaliador1 = avaliador1;
         this.avaliador2 = avaliador2;
         this.nota1 = nota1;
         this.nota2 = nota2;
     }
+
+    /*nome1 = this.getAvaliador1().getEmail();
+    nome2 = this.getAvaliador2().getEmail();
+
+    if (nome1 = nome2){
+        THROW ERROR
+    }*/
 
     public getNomeGrupo(){
         return this.nomeGrupo;
@@ -28,7 +37,7 @@ export default class Avaliacao{
         return this.avaliador1;
     }
 
-    public setAvaliador1(avaliador1: Avaliador){
+    public setAvaliador1(avaliador1: Aluno | Professor){
         this.avaliador1 = avaliador1;
     }
 
@@ -36,7 +45,7 @@ export default class Avaliacao{
         return this.avaliador2;
     }
 
-    public setAvaliador2(avaliador2: Avaliador){
+    public setAvaliador2(avaliador2: Aluno | Professor){
         this.avaliador2 = avaliador2;
     }
 
@@ -61,5 +70,10 @@ export default class Avaliacao{
         nota2 = this.nota2;
         const notaFinal = ((nota1+nota2)/2);
         return notaFinal;
+    }   
+
+
+    if () {
+        
     }
 }
