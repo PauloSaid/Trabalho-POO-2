@@ -32,4 +32,16 @@ export async function deleteAluno(aluno: Aluno) {
     })
 }
 
+
+export async function updateAluno(aluno: Aluno, nomeGrupo: string) {
+    const alunoData = await prisma.aluno.update({
+        where : {
+            matricula: aluno.getMatricula()
+        }, 
+        data: {
+            grupoId: nomeGrupo
+
+        }
+    })
+}
 // fazer: export async function updateAluno

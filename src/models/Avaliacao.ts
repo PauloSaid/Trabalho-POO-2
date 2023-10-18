@@ -1,6 +1,5 @@
 import Professor from "./Professor";
 import Aluno from "./Aluno";
-import Avaliador from "./Avaliador";
 import Grupo from "./Grupo";
 
 export default class Avaliacao{

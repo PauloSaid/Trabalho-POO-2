@@ -13,13 +13,22 @@ export async function populaGrupo(grupo: Grupo) {
             nomeGrupo: grupo.getNomeGrupo(),
             nomeProjeto: grupo.getNomeProjeto(),
             diaApresentacao: grupo.getDiaApresentacao(),
-            alunoId: grupo.getLider()?.getNome()
+            alunoId: grupo.getLider(),
+        }
+    })
+
+    await prisma.aluno.update({
+        where: {
+            email: grupo.getLider(),
+        },
+        data: {
+            grupoId: grupo.getNomeGrupo(),
         }
     })
 }
 
 export async function readGrupo(grupo: Grupo) {
-    const grupoData = await prisma.grupo.findUnique({
+    return await prisma.grupo.findUnique({
         where: {
             nomeGrupo: grupo.getNomeGrupo()
         }
