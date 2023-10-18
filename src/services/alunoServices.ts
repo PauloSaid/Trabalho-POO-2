@@ -11,7 +11,6 @@ export async function populaAluno(aluno: Aluno) {
             nome: aluno.getNome(),
             matricula: aluno.getMatricula(),
             telefone: aluno.getTelefone(),
-            //grupoId: aluno.getGrupo().getNomeGrupo()
         }
     })
 }
@@ -44,4 +43,3 @@ export async function updateAluno(aluno: Aluno, nomeGrupo: string) {
         }
     })
 }
-// fazer: export async function updateAluno
