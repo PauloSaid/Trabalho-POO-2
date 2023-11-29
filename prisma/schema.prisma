@@ -56,11 +56,3 @@ model Avaliacao {
   nota2     Float
   notaFinal Float
 }
-
-//model Avaliador {
-//id    String @id @default(uuid())
-//nome  String
-//email String @unique
-//aluno Aluno @relation(fields: [alunoId], references: [id])
-// alunoId String                            
-//}
