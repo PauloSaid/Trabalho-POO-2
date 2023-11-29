@@ -1,45 +1,76 @@
-import { PrismaClient } from "@prisma/client";
-import Professor from "../models/Professor";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 class ProfessorService{
     constructor(){}
-     async populaProfessor(professor: Professor) {
-    
-        const professorData = await prisma.professor.create({
-            data : {
-                email: professor.getEmail(),
-                nome: professor.getNome(),
-            }
-        })
+     async CreateProfessor(professor: Prisma.ProfessorCreateInput) {
+        try{
+            const newProfessor = await prisma.professor.create({
+                data : professor
+            });
+            return newProfessor;
+        }catch(error){
+            console.log(error);
+            return null;
+        }
     }
     
-     async readProfessor(professor: Professor) {
-        const professorData = await prisma.professor.findUnique({
-            where : {
-                email : professor.getEmail()
+     async findProfessor(email?: string) {
+        try{
+            if(email){
+                const professor = await prisma.professor.findUnique({
+                    where: {
+                        email
+                    }
+                })
+                return professor;
+            }else{
+                const professores = await prisma.professor.findMany();
+                return professores;
             }
-        })
+
+        }catch(error){
+            console.log(error);
+            return null;
+        }
     }
     
-     async updateProfessor(professor: Professor) {
-        const professorData = await prisma.professor.update({
-            where : {
-                email: professor.getEmail()
-            },
-            data: {
-                
-            }
-        })
+     async updateProfessor(email: string, newData: Prisma.ProfessorUpdateInput){
+       try{
+            const professorToUpdate = await prisma.professor.update({
+                where: {
+                    email
+                }, 
+                data: {
+                    nome: newData.nome,
+                    email: newData.email,
+                    updated_at: newData.updated_at
+                }
+            });
+            return professorToUpdate;
+       }catch(error){
+            console.log(error);
+            return null;
+       }
     }
     
-     async deleteProfessor(professor: Professor) {
-        const professorData = await prisma.professor.delete({
-            where: {
-                email: professor.getEmail()
+     async deleteProfessor(email: string) {
+        try{
+            if (!email){
+                return console.log("ID is not optional.");
             }
-        })
+            await prisma.professor.delete({
+                where: {
+                    email
+                }
+            });
+            return "deleted";
+        }catch(error){
+            console.log(error);
+            return null;
+        }
+       
     }
 }
 

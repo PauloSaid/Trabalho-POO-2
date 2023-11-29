@@ -1,61 +1,73 @@
-import { PrismaClient } from "@prisma/client";
-import Grupo from "../models/Grupo";
-import Aluno from "../models/Aluno";
+import { Prisma, PrismaClient } from "@prisma/client";
 
+const prisma = new PrismaClient;
 
-const prisma = new PrismaClient();
+class GrupoService {
+    constructor () {}
 
-class GrupoService{
-    constructor(){}
-
-     async populaGrupo(grupo: Grupo) {
-        
-        const grupoData = await prisma.grupo.create({
-            data: {
-                estandeId: grupo.getNumeroEstande(),
-                nomeGrupo: grupo.getNomeGrupo(),
-                nomeProjeto: grupo.getNomeProjeto(),
-                diaApresentacao: grupo.getDiaApresentacao(),
-                alunoId: grupo.getLider(),
-            }
-        })
-    
-        await prisma.aluno.update({
-            where: {
-                email: grupo.getLider(),
-            },
-            data: {
-                grupoId: grupo.getNomeGrupo(),
-            }
-        })
+    async createGrupo(grupo: Prisma.GrupoCreateInput) {
+        try {
+            const newGrupo = await prisma.grupo.create({
+                data: grupo
+            });
+            return newGrupo;
+        }   catch(error){
+            console.log(error);
+            return null;
+        }
     }
-    
-     async readGrupo(grupo: Grupo) {
-        return await prisma.grupo.findUnique({
-            where: {
-                nomeGrupo: grupo.getNomeGrupo()
+
+    async findGrupo(nomeGrupo?: string){
+        try {
+            if(nomeGrupo){
+                const grupo = await prisma.grupo.findUnique({
+                    where: { nomeGrupo }
+                });
+                return grupo;
+            } else {
+                const grupos = await prisma.grupo.findMany();
+                return grupos;
             }
-        })
+        }   catch(error){
+            console.log(error);
+            return undefined;
+        }
     }
-    
-     async updateGrupo(grupo: Grupo, aluno: Aluno) {
-        const grupoData = await prisma.grupo.update({
-            where: {
-                nomeGrupo: grupo.getNomeGrupo()
-            },
-            data: {
-                alunoId: aluno.getEmail()
-            }
-        })
+
+    async updateGrupo(nomeGrupo: string, newData: Prisma.GrupoUpdateInput){
+        try {
+            const grupoUpdated = await prisma.grupo.update({
+                where: {
+                    nomeGrupo
+                },
+                data: {
+                    alunos: newData.alunos,
+                    avaliacao: newData.avaliacao,
+                    diaApresentacao: newData.diaApresentacao,
+                    lider: newData.lider,
+                    nomeGrupo: newData.nomeGrupo,
+                    nomeProjeto: newData.nomeProjeto,
+                    numeroEstande: newData.numeroEstande
+                }
+            });
+            return grupoUpdated;
+        }   catch(error){
+            console.log(error);
+            return null;
+        }
     }
-    
-    
-     async deleteGrupo(grupo: Grupo) {
-        const grupoData = await prisma.grupo.delete({
-            where: {
-                nomeGrupo: grupo.getNomeGrupo()
+
+    async deleteGrupo(nomeGrupo: string){
+        try {
+            if(!nomeGrupo){
+                return console.log("NomeGrupo is not optional");
             }
-        })
+            await prisma.grupo.delete({where: {nomeGrupo}});
+            return "Deleted";
+        }   catch(error){
+            console.log(error);
+            return null;
+        }
     }
 }
 
