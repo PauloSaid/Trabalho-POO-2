@@ -14,8 +14,8 @@ model Aluno {
   id         String   @id @default(uuid())
   email      String   @unique
   nome       String
-  matricula  Int      @unique
-  telefone   Int      @unique
+  matricula  String   @unique
+  telefone   String   @unique
   grupo      Grupo?   @relation("Lideranca")
   grupoAluno Grupo?    @relation("Composicao", fields: [grupoId], references: [nomeGrupo])
   grupoId    String?

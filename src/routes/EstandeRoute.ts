@@ -1,7 +1,6 @@
 import { Router } from "express";
 import EstandeController from "../controllers/EstandeController";
 
-
 const EstandeRouter = Router();
 
 EstandeRouter.get("/estande/list/:id", EstandeController.listEstande);

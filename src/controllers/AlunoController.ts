@@ -6,24 +6,25 @@ class AlunoController{
     constructor(){}
 
     async listAluno(req: Request, res: Response){
-        try {
+        try{
             const alunoId: string | undefined = req.params.id;
             const alunos = await alunoServices.findAluno(alunoId);
 
-            return res.json(alunos);
-        }   catch(error){
+            res.render("Aluno", {alunos: alunos});
+        }catch(error){
             console.log(error);
             return res.json(400);
         }
-        }
-
-        async createAluno(req: Request, res: Response){
+    }
+        
+    async createAluno(req: Request, res: Response){
             try {
                 const data: Prisma.AlunoCreateInput = req.body;
 
                 const newAluno = await alunoServices.createAluno(data);
+                
 
-                return res.json(newAluno);
+                //return res.json(newAluno);
             }   catch(error){
                 console.log(error);
                 return res.json(400);
@@ -46,6 +47,7 @@ class AlunoController{
             try {
                 const alunoId = req.params.alunoId;
                 const data: Prisma.AlunoUpdateInput = req.body;
+                console.log("entrou");
 
                 const aluno = await alunoServices.updateAluno(alunoId,data);
 

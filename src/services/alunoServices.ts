@@ -30,7 +30,7 @@ class AlunoService {
             }
         }  catch(error){
             console.log(error);
-            return undefined;
+            return null;
         }
     }
 
