@@ -3,12 +3,12 @@ import ProfessorController from "../controllers/ProfessorController";
 
 const ProfessorRouter = Router();
 
-ProfessorRouter.get("/professor/list/:id", ProfessorController.listProfessor);
+ProfessorRouter.get("/professor/list/:id?", ProfessorController.listProfessor);
 
-ProfessorRouter.post("professor/create", ProfessorController.createProfessor);
+ProfessorRouter.post("/professor/create", ProfessorController.createProfessor);
 
-ProfessorRouter.put("professor/update", ProfessorController.updateProfessor);
+ProfessorRouter.patch("/professor/update/:id", ProfessorController.updateProfessor);
 
-ProfessorRouter.delete("professor/delete", ProfessorController.deleteProfessor);
+ProfessorRouter.delete("/professor/delete/:id", ProfessorController.deleteProfessor);
 
 export default ProfessorRouter;

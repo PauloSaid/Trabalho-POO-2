@@ -10,7 +10,7 @@ class ProfessorController{
             const professorId: string | undefined = req.params.id;
             const professores = await professorServices.findProfessor(professorId);
 
-            return res.json(professores);
+            res.render("Professor", {professores: professores});
         }catch(error){
             console.log(error);
             return res.json(400);

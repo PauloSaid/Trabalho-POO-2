@@ -7,7 +7,7 @@ AlunoRouter.get("/aluno/list/:id?", AlunoController.listAluno);
 
 AlunoRouter.post("/aluno/create", AlunoController.createAluno);
 
-AlunoRouter.put("/aluno/update/:alunoId", AlunoController.updateAluno);
+AlunoRouter.patch("/aluno/update/:alunoId", AlunoController.updateAluno);
 
 AlunoRouter.delete("/aluno/delete/:alunoId", AlunoController.deleteAluno);
 

@@ -9,7 +9,7 @@ class EstandeController{
         try {
             const estandes = await estandeServices.findEstande()
 
-            return res.json(estandes);
+            res.render("Estande", {estandes: estandes});
         }   catch(error){
             console.log(error);
             return res.json(400);
@@ -31,7 +31,7 @@ class EstandeController{
 
         async deleteEstande(req: Request, res: Response){
             try {
-                const estandeData: number = parseInt(req.params.numero);
+                const estandeData: string = req.params.numero;
                 const estande = await estandeServices.deleteEstande(estandeData);
 
                 return res.json(estande);
@@ -43,8 +43,10 @@ class EstandeController{
 
         async updateEstande(req: Request, res: Response){
             try {
-                const estandeId = parseInt(req.params.alunoId);
+                const estandeId = req.params.numero;
+                console.log(estandeId);
                 const data: Prisma.EstandeUpdateInput = req.body;
+                console.log(data);
 
                 const estande = await estandeServices.updateEstande(estandeId,data);
 

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Aluno</title>
+        <title>Professor</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     
         <style>
@@ -42,7 +42,7 @@
     </head>
 <body>
     <div class = "container">
-        <h1>Inserir Alunos</h1>
+        <h1>Inserir Professor</h1>
         <form class = "row g-3">
             <div class="col-md-6">
               <input type="email" class="form-control" id="inputEmail" placeholder="Email">
@@ -50,50 +50,36 @@
             <div class="col-md-6">
                 <input type="text" class="form-control" id="inputNome" placeholder="Nome">
             </div>
-            <div class="col-md-6">
-              <input type="text" class="form-control" id="inputMatricula" placeholder="Matricula">
-            </div>
-            <div class="col-md-6">
-                <input type="text" class="form-control" id="inputTelefone" placeholder="Telefone">
-            </div>
             <div id = "divInserir" class="col-12">
-                <button type="submit" class="btn btn-primary" id = "inserirBtn" onclick="createAluno()">Inserir</button>
+                <button type="submit" class="btn btn-primary" id = "inserirBtn" onclick="createProfessor()">Inserir</button>
             </div>
           </form>
 
-          <h1>Lista de Alunos</h1>
+          <h1>Lista de Professores</h1>
     
           <table class="table align-middle table-bordered table-dark">
             <thead>
               <tr>
-                <th scope="col">Matricula</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Email</th>
-                <th scope="col">Telefone</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
-                <% for(let i = 0; i < alunos.length ; i++){%>
+                <% for(let i = 0; i < professores.length ; i++){%>
                 <tr>
                     <td>
-                        <%= alunos[i].matricula %>
+                        <%= professores[i].nome %>
                     </td>
                     <td>
-                        <%= alunos[i].nome %>
+                        <%= professores[i].email %>
                     </td>
                     <td>
-                        <%= alunos[i].email %>
+                        <button type="button" class="btn btn-warning"  onclick="updateProfessor('<%= professores[i].email%>')">Atualizar</button>
                     </td>
                     <td>
-                        <%= alunos[i].telefone %>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-warning"  onclick="updateAluno('<%= alunos[i].email%>')">Atualizar</button>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-danger" onclick="deleteAluno('<%= alunos[i].email%>')">Deletar</button>
+                        <button type="button" class="btn btn-danger" onclick="deleteProfessor('<%= professores[i].email%>')">Deletar</button>
                     </td>
                 </tr>
                 <%}%>
@@ -102,41 +88,39 @@
     </div>
 
     <script>
-        function createAluno(){
-            const matricula = document.getElementById("inputMatricula").value;
+        function createProfessor(){
             const nome = document.getElementById("inputNome").value;
             const email = document.getElementById("inputEmail").value;
-            const telefone = document.getElementById("inputTelefone").value;
-
+           
            const body = JSON.stringify({
-                matricula: matricula,
                 nome: nome,
                 email: email,
-                telefone: telefone
             })
 
-            fetch("/aluno/create", {
+            fetch("/professor/create", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: body
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = '/professor/list';
+                } else {
+                    console.error('Erro ao inserir professor:', response.statusText);
+                }
             });
         }
 
-        function updateAluno(email){
-            const matricula = document.getElementById("inputMatricula").value;
+        function updateProfessor(email){
             const nome = document.getElementById("inputNome").value;
-            const telefone = document.getElementById("inputTelefone").value;
 
            const body = JSON.stringify({
-                matricula: matricula,
                 nome: nome,
-                email: email,
-                telefone: telefone
+                email: email
             })
 
-            fetch(`/aluno/update/${email}`, {
+            fetch(`/professor/update/${email}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
@@ -144,26 +128,26 @@
                 body: body
             }).then(response => {
                 if (response.ok) {
-                    window.location.href = '/aluno/list';
+                    window.location.href = '/professor/list';
                 } else {
-                    console.error('Erro ao atualizar aluno:', response.statusText);
+                    console.error('Erro ao atualizar professor:', response.statusText);
                 }
             });
         }
 
 
-        function deleteAluno(email){
+        function deleteProfessor(email){
 
-            fetch(`/aluno/delete/${email}`, {
+            fetch(`/professor/delete/${email}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
                 },
             }).then(response => {
                 if (response.ok) {
-                    window.location.href = '/aluno/list';
+                    window.location.href = '/professor/list';
                 } else {
-                    console.error('Erro ao deletar aluno:', response.statusText);
+                    console.error('Erro ao deletar professor:', response.statusText);
                 }
             });
         }

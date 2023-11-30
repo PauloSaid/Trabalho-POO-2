@@ -16,7 +16,7 @@ class estandeService{
         }
     }
     
-    async findEstande(numero?: number) {
+    async findEstande(numero?: string) {
         try{
             if(numero){
                 const estande = await prisma.estande.findUnique({
@@ -35,7 +35,7 @@ class estandeService{
         }
     }
     
-    async updateEstande(numero: number, newData: Prisma.EstandeUpdateInput) {
+    async updateEstande(numero: string, newData: Prisma.EstandeUpdateInput) {
         try{    
             const estandeToUpdate = await prisma.estande.update({
                 where: {
@@ -52,7 +52,7 @@ class estandeService{
         }
     }
     
-     async deleteEstande(numero: number) {
+     async deleteEstande(numero: string) {
         try{
             if(!numero){
                 return console.log("number is not optional.");

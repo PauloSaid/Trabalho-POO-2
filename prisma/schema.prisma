@@ -34,7 +34,7 @@ model Professor {
 model Grupo {
   id              String     @id @default(uuid())
   avaliacao       Avaliacao?
-  estandeId       Int
+  estandeId       String
   nomeGrupo       String     @unique
   nomeProjeto     String     @unique
   diaApresentacao DateTime
@@ -45,7 +45,7 @@ model Grupo {
 }
 
 model Estande {
-  numero  Int     @id @unique
+  numero  String     @id @unique
   grupoId Grupo[]
 }
 
