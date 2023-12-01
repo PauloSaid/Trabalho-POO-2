@@ -10,7 +10,7 @@ class AvaliacaoContoller{
             const avalicaoId: string | undefined = req.params.id;
             const avaliacao = await avaliacaoServices.findAvaliacao(avalicaoId);
 
-            return res.json(avaliacao);
+           res.render("Avaliacao", {avaliacao: avaliacao})
 
         }catch(error){
             console.log(error);
@@ -22,9 +22,9 @@ class AvaliacaoContoller{
         try{
             // não sei se funciona, tem q testar dps
             const avaliacaoData: Prisma.AvaliacaoCreateInput = req.body;
-            const grupoData: Prisma.GrupoCreateInput = req.body;
+            console.log(avaliacaoData);
 
-            const newAvaliacao = await avaliacaoServices.createAvalicao(avaliacaoData, grupoData);
+            const newAvaliacao = await avaliacaoServices.createAvalicao(avaliacaoData);
             
             return res.json(newAvaliacao);
         }catch(error){
@@ -36,7 +36,9 @@ class AvaliacaoContoller{
     async deleteAvaliacao(req: Request, res: Response){
         try{
             const avaliacaoData: string = req.params.id;
+            console.log(avaliacaoData);
             const avaliacao = await avaliacaoServices.deleteAvaliacao(avaliacaoData);
+            console.log(avaliacao);
 
             return res.json(avaliacao);
 
@@ -49,7 +51,9 @@ class AvaliacaoContoller{
     async updateAvaliacao(req: Request, res: Response){
         try{
             const avaliacaoId = req.params.id;
+            console.log(avaliacaoId);
             const newData: Prisma.AvaliacaoUpdateInput = req.body;
+            console.log(newData);
 
             const professor = await avaliacaoServices.updateAvaliacao(avaliacaoId, newData);
 

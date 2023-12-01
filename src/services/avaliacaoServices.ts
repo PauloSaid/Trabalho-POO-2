@@ -4,16 +4,11 @@ const prisma = new PrismaClient();
 
 class AvalicacaoService{
     constructor(){}
-     async createAvalicao(avaliacao: Prisma.AvaliacaoCreateInput, grupo: Prisma.GrupoCreateInput) {
+     async createAvalicao(avaliacao: Prisma.AvaliacaoCreateInput) {
         
         try{
             const newAvalicao = await prisma.avaliacao.create({
-                data: {
-                    idGrupo: grupo.nomeGrupo,
-                    nota1: avaliacao.nota1,
-                    nota2: avaliacao.nota2,
-                    notaFinal: ((avaliacao.nota1 + avaliacao.nota2) / 2)
-                }
+                data: avaliacao
             })
             return
        }catch(error){
@@ -58,6 +53,7 @@ class AvalicacaoService{
                 data: {
                     nota1: avaliacao.nota1,
                     nota2: avaliacao.nota2,
+                    notaFinal: avaliacao.notaFinal
                 }
             });
             return avaliacaoToUpdate;

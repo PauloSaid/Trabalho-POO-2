@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Grupo</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+        <style>
+            body{
+                background-color: rgba(255, 255, 255, 0.534);
+            }
+            
+            table{
+                margin-top: 10px;
+            }
+
+            td, th{
+                text-align: center;
+            }
+
+            td{
+                text-align: center;
+            }
+
+            #divInserir{
+                display: flex;
+                margin: 10 auto !important;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #inserirBtn{
+                width: 400px;
+                margin-bottom: 10px;
+            }
+
+            .container{
+                margin-top: 50px;
+            }
+        </style>
+    </head>
+<body>
+    <div class = "container">
+        <h1>Inserir Grupos</h1>
+        <form class = "row g-3">
+            <div class="col-md-6">
+              <input type="nomegrupo" class="form-control" id="inputNomeGrupo" placeholder="Nome do Grupo">
+            </div>
+            <div class="col-md-6">
+                <input type="text" class="form-control" id="inputNomeProjeto" placeholder="Nome do Projeto">
+            </div>
+            <div class="col-md-6">
+                <input type="text" class="form-control" id="inputLider" placeholder="Lider">
+            </div>
+            <div class="col-md-6">
+              <input type="text" class="form-control" id="inputEstande" placeholder="Estande">
+            </div>
+            <div class="col-md-6">
+                <input type="text" class="form-control" id="inputDiaApresentacao" placeholder="Dia de Apresentação">
+            </div>
+            <div id = "divInserir" class="col-12">
+                <button type="submit" class="btn btn-primary" id = "inserirBtn" onclick="createGrupo()">Inserir</button>
+            </div>
+          </form>
+
+          <h1>Lista de Grupos</h1>
+    
+          <table class="table align-middle table-bordered table-light">
+            <thead>
+              <tr>
+                <th scope="col">Nome do Grupo</th>
+                <th scope="col">Nome do Projeto</th>
+                <th scope="col">Lider</th>
+                <th scope="col">Estande</th>
+                <th scope="col">Dia Apresentação</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+                <% for(let i = 0; i < grupos.length ; i++){%>
+                <tr>
+                    <td>
+                        <%= grupos[i].nomeGrupo %>
+                    </td>
+                    <td>
+                        <%= grupos[i].nomeProjeto %>
+                    </td>
+                    <td>
+                        <%= grupos[i].alunoId %>
+                    </td>
+                    <td>
+                        <%= grupos[i].estandeId %>
+                    </td>
+                    <td>
+                        <%= grupos[i].diaApresentacao %>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-warning"  onclick="updateGrupo('<%= grupos[i].nomeGrupo%>')">Atualizar</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" onclick="deleteGrupo('<%= grupos[i].nomeGrupo%>')">Deletar</button>
+                    </td>
+                </tr>
+                <%}%>
+            </tbody>
+          </table>
+    </div>
+
+    <script>
+        function createGrupo(){
+            const nomeGrupo = document.getElementById("inputNomeGrupo").value;
+            const nomeProjeto = document.getElementById("inputNomeProjeto").value;
+            const alunoId = document.getElementById("inputLider").value;
+            const numeroEstande = document.getElementById("inputEstande").value;
+            const diaApresentacao = new Date(document.getElementById("inputDiaApresentacao").value);
+
+
+           const body = JSON.stringify({
+                nomeGrupo: nomeGrupo,
+                nomeProjeto: nomeProjeto,
+                lider: {
+                    connect:{
+                        email: alunoId
+                    }
+                },
+                numeroEstande: {
+                    connect:{
+                        numero: numeroEstande
+                    }
+                },
+                diaApresentacao: diaApresentacao,
+            })
+
+            fetch("/grupo/create", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: body
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = '/grupo/list';
+                } else {
+                    console.error('Erro ao atualizar grupo:', response.statusText);
+                }
+            });
+        }
+
+        function updateGrupo(nomeGrupo){
+            const nomeProjeto = document.getElementById("inputNomeProjeto").value;
+            const lider = document.getElementById("inputLider").value;
+            const numeroEstande = document.getElementById("inputEstande").value;
+            const diaApresentacao = new Date(document.getElementById("inputDiaApresentacao").value);
+            
+           const body = JSON.stringify({
+                nomeGrupo: nomeGrupo,
+                nomeProjeto: nomeProjeto,
+                alunoId: lider,
+                numeroEstande: {
+                    connect:{
+                        numero: numeroEstande
+                    }
+                },
+                diaApresentacao: diaApresentacao,
+            })
+
+            fetch(`/grupo/update/${nomeGrupo}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: body
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = '/grupo/list';
+                } else {
+                    console.error('Erro ao atualizar grupo:', response.statusText);
+                }
+            });
+        }
+
+
+        function deleteGrupo(nomeGrupo){
+            fetch(`/grupo/delete/${nomeGrupo}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = '/grupo/list';
+                } else {
+                    console.error('Erro ao deletar grupo:', response.statusText);
+                }
+            });
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

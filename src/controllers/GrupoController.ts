@@ -10,7 +10,7 @@ class GrupoController{
             const grupoId: string | undefined = req.params.id;
             const grupos = await grupoServices.findGrupo(grupoId);
 
-            return res.json(grupos);
+           res.render("Grupo", {grupos: grupos});
         }   catch(error){
             console.log(error);
             return res.json(400);
@@ -20,8 +20,10 @@ class GrupoController{
         async createGrupo(req: Request, res: Response){
             try {
                 const data: Prisma.GrupoCreateInput = req.body;
+                console.log(data);
 
                 const newGrupo = await grupoServices.createGrupo(data);
+                console.log(newGrupo);
 
                 return res.json(newGrupo);
             }   catch(error){
@@ -33,7 +35,9 @@ class GrupoController{
         async deleteGrupo(req: Request, res: Response){
             try {
                 const grupoData: string = req.params.grupoId;
+                console.log(grupoData);
                 const grupo = await grupoServices.deleteGrupo(grupoData);
+                console.log(grupo);
 
                 return res.json(grupo);
             }   catch(error){

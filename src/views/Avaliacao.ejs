@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Aluno</title>
+        <title>Avaliacao</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     
         <style>
@@ -15,12 +15,13 @@
                 margin-top: 10px;
             }
 
-
-
             td, th{
                 text-align: center;
             }
 
+            td{
+                text-align: center;
+            }
 
             #divInserir{
                 display: flex;
@@ -42,58 +43,54 @@
     </head>
 <body>
     <div class = "container">
-        <h1>Inserir Alunos</h1>
         <form class = "row g-3">
             <div class="col-md-6">
-              <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+              <input type="text" class="form-control" id="inputGrupo" placeholder="Grupo">
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control" id="inputNome" placeholder="Nome">
+                <input type="number" class="form-control" id="inputNota1" placeholder="Nota 1">
             </div>
             <div class="col-md-6">
-              <input type="text" class="form-control" id="inputMatricula" placeholder="Matricula">
-            </div>
-            <div class="col-md-6">
-                <input type="text" class="form-control" id="inputTelefone" placeholder="Telefone">
+              <input type="number" class="form-control" id="inputNota2" placeholder="Nota 2">
             </div>
             <div id = "divInserir" class="col-12">
-                <button type="submit" class="btn btn-primary" id = "inserirBtn" onclick="createAluno()">Inserir</button>
+                <button type="submit" class="btn btn-primary" id = "inserirBtn" onclick="createAvaliacao()">Inserir</button>
             </div>
           </form>
 
-          <h1>Lista de Alunos</h1>
+          <h1>Lista de Avaliações</h1>
     
           <table class="table align-middle table-bordered table-dark">
             <thead>
               <tr>
-                <th scope="col">Matricula</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Email</th>
-                <th scope="col">Telefone</th>
+                <th scope="col">Grupo</th>
+                <th scope="col">Nota 1</th>
+                <th scope="col">Nota 2</th>
+                <th scope="col">Nota Final</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
-                <% for(let i = 0; i < alunos.length ; i++){%>
+                <% for(let i = 0; i < avaliacao.length ; i++){%>
                 <tr>
                     <td>
-                        <%= alunos[i].matricula %>
+                        <%= avaliacao[i].idGrupo %>
                     </td>
                     <td>
-                        <%= alunos[i].nome %>
+                        <%= avaliacao[i].nota1 %>
                     </td>
                     <td>
-                        <%= alunos[i].email %>
+                        <%= avaliacao[i].nota2 %>
                     </td>
                     <td>
-                        <%= alunos[i].telefone %>
+                        <%= avaliacao[i].notaFinal %>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-warning"  onclick="updateAluno('<%= alunos[i].email%>')">Atualizar</button>
+                        <button type="button" class="btn btn-warning"  onclick="updateAvaliacao('<%= avaliacao[i].idGrupo%>')">Atualizar</button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-danger" onclick="deleteAluno('<%= alunos[i].email%>')">Deletar</button>
+                        <button type="button" class="btn btn-danger" onclick="deleteAvaliacao('<%= avaliacao[i].idGrupo%>')">Deletar</button>
                     </td>
                 </tr>
                 <%}%>
@@ -102,47 +99,50 @@
     </div>
 
     <script>
-        function createAluno(){
-            const matricula = document.getElementById("inputMatricula").value;
-            const nome = document.getElementById("inputNome").value;
-            const email = document.getElementById("inputEmail").value;
-            const telefone = document.getElementById("inputTelefone").value;
+        function createAvaliacao(){
+            const idGrupo = document.getElementById("inputGrupo").value;
+            const nota1 = parseFloat(document.getElementById("inputNota1").value);
+            const nota2 = parseFloat(document.getElementById("inputNota2").value);
+            const notaFinal = parseFloat((nota1 + nota2)/2);
 
            const body = JSON.stringify({
-                matricula: matricula,
-                nome: nome,
-                email: email,
-                telefone: telefone
+                nomeDoGrupo:{
+                    connect:{
+                        nomeGrupo: idGrupo
+                    }
+                },
+                nota1: nota1,
+                nota2: nota2,
+                notaFinal: notaFinal
             })
 
-            fetch("/aluno/create", {
+            fetch("/avaliacao/create", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: body
-            }).then(response => {
-                if (response.ok) {
-                    window.location.href = '/aluno/list';
-                } else {
-                    console.error('Erro ao atualizar aluno:', response.statusText);
-                }
             });
         }
 
-        function updateAluno(email){
-            const matricula = document.getElementById("inputMatricula").value;
-            const nome = document.getElementById("inputNome").value;
-            const telefone = document.getElementById("inputTelefone").value;
+        function updateAvaliacao(idGrupo){
+            const nomeGrupo = document.getElementById("inputGrupo").value;
+            const nota1 = parseFloat(document.getElementById("inputNota1").value);
+            const nota2 = parseFloat(document.getElementById("inputNota2").value);
+            const notaFinal = parseFloat((nota1 + nota2)/2);
 
            const body = JSON.stringify({
-                matricula: matricula,
-                nome: nome,
-                email: email,
-                telefone: telefone
+                nomeDoGrupo:{
+                    connect:{
+                        nomeGrupo: idGrupo
+                    }
+                },
+                nota1: nota1,
+                nota2: nota2,
+                notaFinal: (nota1 + nota2) / 2
             })
 
-            fetch(`/aluno/update/${email}`, {
+            fetch(`/avaliacao/update/${idGrupo}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
@@ -150,26 +150,25 @@
                 body: body
             }).then(response => {
                 if (response.ok) {
-                    window.location.href = '/aluno/list';
+                    window.location.href = '/avaliacao/list';
                 } else {
-                    console.error('Erro ao atualizar aluno:', response.statusText);
+                    console.error('Erro ao atualizar avaliacao:', response.statusText);
                 }
             });
         }
 
 
-        function deleteAluno(email){
-
-            fetch(`/aluno/delete/${email}`, {
+        function deleteAvaliacao(idGrupo){
+            fetch(`/avaliacao/delete/${idGrupo}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
                 },
             }).then(response => {
                 if (response.ok) {
-                    window.location.href = '/aluno/list';
+                    window.location.href = '/avaliacao/list';
                 } else {
-                    console.error('Erro ao deletar aluno:', response.statusText);
+                    console.error('Erro ao deletar avaliacao:', response.statusText);
                 }
             });
         }

@@ -50,8 +50,8 @@ model Estande {
 }
 
 model Avaliacao {
-  nomeGrupo Grupo  @relation(fields: [idGrupo], references: [nomeGrupo])
-  idGrupo   String @id @default(uuid())
+  nomeDoGrupo Grupo  @relation(fields: [idGrupo], references: [nomeGrupo])
+  idGrupo   String @unique
   nota1     Float
   nota2     Float
   notaFinal Float
