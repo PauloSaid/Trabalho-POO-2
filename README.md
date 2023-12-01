@@ -14,25 +14,30 @@
 O Inovaweek é uma semana proposta pela Universidade de Vila Velha com afim de apresentar propostas inovadoras para o mercado. Durante essa semana, o Inova recebe diversos projetos desenvolvidos por alunos da universidade. Cada projeto, de no máximo quatro alunos, serão julgados por professores e outros estudantes, no qual as apresentações deste projeto possuem dia e hora marcadas, uma vez que os estandes serão usados por diferentes grupos em diferentes dias.
 Os grupos que estão participando do Inovaweek terão um nome, um aluno designado como líder, e um nome para seu projeto. Simultaneamente, os alunos serão identificados pela sua matrícula, nome, e-mail e telefone. Por fim, os professores possuirão um nome e e-mail.
 
-## Diagrama de classe
+## Enviroment Setup
 
-Como o diagrama está sendo modificado constantemente, quando estiver estável/100% correto eu coloco a foto aqui.
-
-# Preparando o ambiente
-
-Siga os seguintes passos para inicializar o trabalho
+### 1. initialize a project and create the package.json file:
 
 ```npm init -y```
 
-## Instalar o Typescript
+## 2. Installing Typescript
 
 ```npm install typescript --save-dev```
 
-## Inicializar e Configurar o Typescript
+### 2.1
+
+```npm install typescript ts-node @types/node --save-dev```
+
+&&
+
+```npm install @types/node --save-dev```
+
+
+## 3. Initialize and properly configure TypeScript
 
 ```npx tsc --init```
 
-## Formato do tsconfig.json recomendado:
+I am actually using these configurations:
 
 ```{
 {
@@ -44,19 +49,23 @@ Siga os seguintes passos para inicializar o trabalho
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["node"]
   }
 }
 ```
 
-## Instalando o Prisma (ORM):
+## 4. Installing Prisma (ORM)
+### Installing prisma
+npm install prisma --save-dev
 
-```npm install prisma --save-dev```
+## 5. Setting up Prisma with the init command of the Prisma CLI
+### OBS.: I'm using SQLite as DBMS
+npx prisma init --datasource-provider sqlite
 
-```npx prisma init --datasource-provider sqlite```
+## 6. Installing Express
+### Installing express
+```npm install express --save```
 
-## Como compilar o projeto
-
-```npx tsc``` - Transforma typscript -> javascript :
-
-```node ./dist/nome.js``` - roda o código que anteriormente foi passado para javascript.
+### 6.1 Also, you need to install express types
+```npm i --save-dev @types/express```
